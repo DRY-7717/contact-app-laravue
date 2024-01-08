@@ -1,0 +1,23 @@
+openapi: 3.1.0
+info:
+  title: Contact App API
+  version: "v.1.0"
+  license:
+    name: Bima Arya Wicaksana
+    url: wicaksanabimaarya01@gmail.com
+  x-logo:
+    url: ../img/contact.png
+servers:
+  - url: http://localhost:8000/
+tags:
+  - name: Info
+    description: Information and status about Contact App server.
+    
+x-tagGroups:
+  - name: Resources
+    tags:
+      - Info
+
+paths:
+  /:
+    $ref: info/(index).yaml

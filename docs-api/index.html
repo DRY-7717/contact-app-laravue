@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docs API contacts app</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800;900;1000&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="redoc-container"></div>
+    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+    <script>
+        Redoc.init('docs/index.yaml', {
+            "sortEnumValuesAlphabetically": true,
+            "sortTagsAlphabetically": true,
+            "sortOperationsAlphabetically": true,
+            "theme": {
+                "sidebar": {
+                    "backgroundColor": "#A1EEBD",
+                    "textColor" : "#174327"
+                },
+                "breakpoints": {
+                    "medium": "100rem",
+                },
+                "typography": {
+                    "fontSize": "15px",
+                    "fontFamily": "Nunito, sans-serif",
+                    "headings": {
+                        "fontFamily": "Nunito, sans-serif",
+                        "fontWeight": "600"
+                    },
+                    "code": {
+                        "fontSize": "15px",
+                        "fontFamily": "JetBrains Mono, monospace !important",
+                    },
+                },
+                "logo":{
+                    "maxHeight" : "140px",
+                    "maxWidth" : "140px",
+                    "gutter" : "15px"
+                }
+            }
+
+
+
+        }, document.getElementById('redoc-container'))
+    </script>
+</body>
+
+</html>

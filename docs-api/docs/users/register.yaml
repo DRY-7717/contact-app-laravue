@@ -1,0 +1,89 @@
+post:
+  security:
+    - Guest: []
+  operationId: register-user
+  tags:
+    - User
+  description: Register new user.
+  summary: Register New User
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - username
+            - password
+            - name
+          properties:
+            name:
+              type: string
+              example: Bima Arya Wicaksana
+            username:
+              type: string
+              example: wicaksanabimaarya
+            password:
+              type: string
+              example: kudahijau
+  responses:
+    201:
+      description: register user success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                required:
+                  - id
+                  - name
+                  - username
+                properties:
+                  id:
+                    type: string
+                    format: ulid
+                    example: JZsVCk9q7tCQ6vtGXGFnsFNNlOM7vjba
+                  name:
+                    type: string
+                    example: Bima Arya Wicaksana
+                  username:
+                    type: string
+                    example: wicaksanabimaarya
+    422:
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - errors
+            properties:
+              message:
+                type: string
+                example: The given data was Invalid
+              errors:
+                type: object
+                required:
+                  - name
+                  - username
+                  - password
+                properties:
+                  name:
+                    type: array
+                    items:
+                      type: string
+                      example: the field name is required
+                  username:
+                    type: array
+                    items:
+                      type: string
+                      example: the field username is required
+                  password:
+                    type: array
+                    items:
+                      type: string
+                      example: the field password is required

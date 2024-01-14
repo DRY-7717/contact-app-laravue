@@ -1,6 +1,7 @@
 openapi: 3.1.0
 info:
   title: Contact App API
+  description: This API documentation is created to assist in building a contact app using Laravel and Vue.js.
   version: "v.1.0"
   license:
     name: Bima Arya Wicaksana
@@ -8,16 +9,57 @@ info:
   x-logo:
     url: ../img/contact.png
 servers:
-  - url: http://localhost:8000/
+  - url: http://localhost:8000
+
 tags:
   - name: Info
     description: Information and status about Contact App server.
-    
+  - name: User
+    description: Information and management users.
+  - name: Contact
+    description: Documetation for manage contact users
+
 x-tagGroups:
   - name: Resources
     tags:
       - Info
+      - User
+      - Contact
+
+      
 
 paths:
+  # Info
   /:
     $ref: info/(index).yaml
+
+  # Users
+  /api/users:
+    $ref: users/register.yaml
+  /api/users/login:
+    $ref: users/login.yaml
+  /api/users/current:
+    $ref: users/(index).yaml
+  /api/users/logout:
+    $ref: users/logout.yaml
+  
+  #Contacts
+  /api/contacts:
+    $ref: contacts/(index).yaml
+  /api/contacts/{id}:
+    $ref: contacts/(item).yaml
+
+  
+
+
+components:
+  securitySchemes:
+    Sanctum:
+      type: http
+      scheme: bearer
+      description: Bearer authorization.
+    Guest:
+      type: http
+      scheme: any
+      description: Authorization header should be ommited.
+    

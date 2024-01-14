@@ -1,0 +1,23 @@
+delete:
+  security:
+    - Sanctum: []
+  operationId: logout-user
+  tags:
+    - User
+  description: Logout user.
+  summary: Logout User
+  parameters:
+    - name: Authorization
+      in: header
+  responses:
+    200:
+      description: logout user
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: logout success
+    

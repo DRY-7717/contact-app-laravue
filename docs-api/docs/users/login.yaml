@@ -1,0 +1,84 @@
+post:
+  security:
+    - Guest: []
+  operationId: login-user
+  tags:
+    - User
+  description: Login user.
+  summary: Login User
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - username
+            - password
+          properties:
+            username:
+              type: string
+              example: wicaksanabimaarya
+            password:
+              type: string
+              example: kudahijau
+  responses:
+    200:
+      description: login user successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                required:
+                  - id
+                  - name
+                  - username
+                  - token
+                properties:
+                  id:
+                    type: string
+                    format: ulid
+                    example: JZsVCk9q7tCQ6vtGXGFnsFNNlOM7vjba
+                  name:
+                    type: string
+                    example: Bima Arya Wicaksana
+                  username:
+                    type: string
+                    example: wicaksanabimaarya
+                  token:
+                    type: string
+                    example: JZsVCk9q7tCQ6vtGXGFnsFNNlOM7vjba
+    422:
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - errors
+            properties:
+              message:
+                type: string
+                example: The given data was Invalid
+              errors:
+                type: object
+                required:
+                  - username
+                  - password
+                properties:
+                  username:
+                    type: array
+                    items:
+                      type: string
+                      example: the field username is required
+                  password:
+                    type: array
+                    items:
+                      type: string
+                      example: the field password is required
+    

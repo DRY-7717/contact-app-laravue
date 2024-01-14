@@ -1,0 +1,143 @@
+get:
+  security:
+    - Sanctum: []
+  operationId: get-user-current
+  tags:
+    - User
+  summary: Get User Current
+  parameters:
+    - name: Authorization
+      in: header
+  responses:
+    200:
+      description: Succes get current user
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                required:
+                  - id
+                  - name
+                  - username
+                properties:
+                  id:
+                    type: string
+                    format: ulid
+                    example: JZsVCk9q7tCQ6vtGXGFnsFNNlOM7vjba
+                  name:
+                    type: string
+                    example: Bima Arya Wicaksana
+                  username:
+                    type: string
+                    example: wicaksanabimaarya
+    404:
+      description: Data not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Data not found.
+
+patch:
+  security:
+    - Sanctum: []
+  operationId: update-user-current
+  tags:
+    - User
+  summary: Update User Current
+  parameters:
+    - name: Authorization
+      in: header
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - name
+            - password
+          properties:
+            name:
+              type: string
+              example: Bima Arya Wicaksana
+            password:
+              type: string
+              example: kudahijau
+  responses:
+    200:
+      description: Succes get current user
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                required:
+                  - id
+                  - name
+                  - username
+                properties:
+                  id:
+                    type: string
+                    format: ulid
+                    example: JZsVCk9q7tCQ6vtGXGFnsFNNlOM7vjba
+                  name:
+                    type: string
+                    example: Bima Arya Wicaksana
+                  username:
+                    type: string
+                    example: wicaksanabimaarya
+    404:
+      description: Data not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Data not found.
+    422:
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - errors
+            properties:
+              message:
+                type: string
+                example: The given data was Invalid
+              errors:
+                type: object
+                required:
+                  - name
+                  - password
+                properties:
+                  name:
+                    type: array
+                    items:
+                      type: string
+                      example: the field name is required
+                  password:
+                    type: array
+                    items:
+                      type: string
+                      example: the field password is required

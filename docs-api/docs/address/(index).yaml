@@ -1,36 +1,22 @@
 get:
   security:
     - Sanctum: []
-  operationId: list-contact-user
+  operationId: list-address
+  summary: List Address
   tags:
-    - Contact
-  summary: List Contact User
+    - Address
   parameters:
     - name: Authorization
       in: header
-    - name: name
-      in: query
+    - name: idcontact
+      in: path
+      required: true
       schema:
         type: string
-    - name: email
-      in: query
-      schema:
-        type: string
-    - name: phone
-      in: query
-      schema:
-        type: string
-    - name: page
-      in: query
-      schema:
-        type: string
-    - name: size
-      in: query
-      schema:
-        type: string
+        format: ulid
   responses:
     200:
-      description: List contact users
+      description: List address
       content:
         application/json:
           schema:
@@ -43,36 +29,40 @@ get:
                 items:
                   type: object
                   required:
-                    - id
-                    - first_name
-                    - last_name
-                    - email
-                    - phone
+                  - id
+                  - street
+                  - city
+                  - province
+                  - country
+                  - postal_code
                   properties:
                     id:
                       type: string
                       format: ulid
                       example: 01h4v193cbsqf516fhrjssrnk1
-                    first_name:
+                    street:
                       type: string
-                      example: Budiono
-                    last_name:
+                      example: Jl. Meruyung
+                    city:
                       type: string
-                      example: Sudjatmiko
-                    email:
+                      example: Depok
+                    province:
                       type: string
-                      example: budionosujadmiko@gmail.com
-                    phone:
+                      example: West Java
+                    country:
                       type: string
-                      example: "089638307725"
-              meta:
-                type: object
+                      example: Indonesia
+                    postal_code:
+                      type: string
+                      example: "16515"
     400:
       description: Invalid parameters
       content:
         application/json:
           schema:
             type: object
+            required:
+              - message 
             properties:
               message:
                 type: string
@@ -80,39 +70,49 @@ get:
 post:
   security:
     - Sanctum: []
-  operationId: create-contact
+  operationId: create-address
+  summary: Create Address
   tags:
-    - Contact
-  summary: Create Contact
+    - Address
   parameters:
     - name: Authorization
       in: header
+    - name: idcontact
+      in: path
+      required: true
+      schema:
+        type: string
+        format: ulid
   requestBody:
     content:
       application/json:
         schema:
           type: object
           required:
-            - first_name
-            - last_name
-            - email
-            - phone
+            - street
+            - city
+            - province
+            - country
+            - postal_code
           properties:
-            first_name:
+            street:
               type: string
-              example: Budiono
-            last_name:
+              example: Jl. Meruyung
+            city:
               type: string
-              example: Sudjatmiko
-            email:
+              example: Depok
+            province:
               type: string
-              example: budionosujadmiko@gmail.com
-            phone:
+              example: West Java
+            country:
               type: string
-              example: 089645231132
+              example: Indonesia
+            postal_code:
+              type: string
+              example: "16515"
   responses:
     201:
-      description: Success create contact
+      description: Success create address
       content:
         application/json:
           schema:
@@ -124,27 +124,43 @@ post:
                 type: object
                 required:
                   - id
-                  - first_name
-                  - last_name
-                  - email
-                  - phone
+                  - street
+                  - city
+                  - province
+                  - country
+                  - postal_code
                 properties:
                   id:
                     type: string
                     format: ulid
                     example: 01h4v193cbsqf516fhrjssrnk1
-                  first_name:
+                  street:
                     type: string
-                    example: Budiono
-                  last_name:
+                    example: Jl. Meruyung
+                  city:
                     type: string
-                    example: Sudjatmiko
-                  email:
+                    example: Depok
+                  province:
                     type: string
-                    example: budionosujadmiko@gmail.com
-                  phone:
+                    example: West Java
+                  country:
                     type: string
-                    example: "089638307725"
+                    example: Indonesia
+                  postal_code:
+                    type: string
+                    example: "16515"
+    400:
+      description: Invalid parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Invalid parameters, see documentation.
     403:
       description: Unauthenticated
       content:
@@ -174,28 +190,34 @@ post:
               errors:
                 type: object
                 required:
-                  - first_name
-                  - last_name
-                  - email
-                  - phone
+                  - street
+                  - city
+                  - province
+                  - country
+                  - postal_code
                 properties:
-                  first_name:
+                  street:
                     type: array
                     items:
                       type: string
-                      example: the field first_name is required
-                  last_name:
+                      example: the field street is required
+                  city:
                     type: array
                     items:
                       type: string
-                      example: the field last_name is required
-                  email:
+                      example: the field city is required
+                  province:
                     type: array
                     items:
                       type: string
-                      example: the field email is required
-                  phone:
+                      example: the field province is required
+                  country:
                     type: array
                     items:
                       type: string
-                      example: the field phone is required
+                      example: the field country is required
+                  postal_code:
+                    type: array
+                    items:
+                      type: string
+                      example: the field postal_code is required

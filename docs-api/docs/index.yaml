@@ -18,6 +18,8 @@ tags:
     description: Information and management users.
   - name: Contact
     description: Documetation for manage contact users
+  - name: Address
+    description: Documetation for manage address users
 
 x-tagGroups:
   - name: Resources
@@ -25,6 +27,7 @@ x-tagGroups:
       - Info
       - User
       - Contact
+      - Address
 
       
 
@@ -43,13 +46,17 @@ paths:
   /api/users/logout:
     $ref: users/logout.yaml
   
-  #Contacts
+  # Contacts
   /api/contacts:
     $ref: contacts/(index).yaml
   /api/contacts/{id}:
     $ref: contacts/(item).yaml
 
-  
+  # Address
+  /api/contacts/{idcontact}/addresses:
+    $ref: address/(index).yaml
+  /api/contacts/{id}/addresses/{id}:
+    $ref: address/(item).yaml
 
 
 components:

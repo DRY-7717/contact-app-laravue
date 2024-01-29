@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Models\Contact;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,5 +29,15 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+            if ($request->is('api/contacts/*')) {
+                return response()->json([
+                    'message' => 'Data not found.'
+                ], 404);
+            }
+        });
+
+       
     }
 }

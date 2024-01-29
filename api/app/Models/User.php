@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements \Illuminate\Contracts\Auth\Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasUlids;
 
@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
 
-     protected $guarded = ['id'];
+    protected $guarded = ['id'];
 
     // protected $fillable = [
     //     'name',
@@ -47,7 +47,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function contacts(): HasMany {
+    public function contacts(): HasMany
+    {
         return $this->hasMany(Contact::class, 'user_id', 'id');
     }
+
+    
 }

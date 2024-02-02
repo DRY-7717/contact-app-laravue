@@ -4,17 +4,54 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateContactRequest;
 use App\Http\Requests\UpdateContactRequest;
+use App\Http\Resources\ContactCollection;
 use App\Http\Resources\CreateContactResource;
 use App\Models\Contact;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ContactController extends Controller
 {
+
+
+    public function index(Request $request): ContactCollection
+    {
+        $user = Auth::user();
+        $page = $request->input('page', 1);
+        $size = $request->input('size', 10);
+
+        $contacts =  Contact::query()->where('user_id', $user->id);
+
+        $contacts =  $contacts->where(function (Builder $builder) use ($request) {
+            $name = $request->input('name');
+            if ($name) {
+                $builder->where(function (Builder $builder) use ($name) {
+                    $builder->orWhere('first_name', 'like', '%' . $name . '%');
+                    $builder->orWhere('last_name', 'like', '%' . $name . '%');
+                });
+            }
+
+            $email = $request->input('email');
+            if ($email) {
+                $builder->where('email', 'like', '%' . $email . '%');
+            }
+
+            $phone = $request->input('phone');
+            if ($phone) {
+                $builder->where('phone', 'like', '%' . $phone . '%');
+            }
+        })->paginate(perPage: $size, page: $page);
+
+        return new ContactCollection($contacts);
+    }
+
+
+   
+
+
     public function store(CreateContactRequest $request): JsonResponse
     {
 
@@ -26,23 +63,7 @@ class ContactController extends Controller
         return (new CreateContactResource($contact))->response()->setStatusCode(201);
     }
 
-    // public function show($id): CreateContactResource
-    // {
-
-    //     $data = Contact::where('id', $id)->where('user_id', auth()->user()->id)->first();
-
-    //     if (!$data) {
-    //         throw new HttpResponseException(response()->json([
-    //             "errors" => [
-    //                 "message" => [
-    //                     "Data not found."
-    //                 ]
-    //             ]
-    //         ])->setStatusCode(404));
-    //     }
-
-    //     return new CreateContactResource($data);
-    // }
+  
     public function show(Contact $contact): CreateContactResource
     {
         if ($contact->user_id !== auth()->user()->id) {

@@ -32,6 +32,7 @@ Route::middleware(ApiAuthMiddleware::class)->group(function () {
    Route::delete('/users/logout', [UserController::class, 'logout']);
 
    // contacts
+   Route::get('/contacts', [ContactController::class, 'index']);
    Route::post('/contacts', [ContactController::class,'store']);
    Route::get('/contacts/{contact}', [ContactController::class,'show']);
    Route::put('/contacts/{contact}', [ContactController::class,'update']);

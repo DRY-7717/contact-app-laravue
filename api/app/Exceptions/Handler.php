@@ -37,6 +37,21 @@ class Handler extends ExceptionHandler
                 ], 404);
             }
         });
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+            if ($request->is('api/contacts/*/addresses')) {
+                return response()->json([
+                    'message' => 'Data not found.'
+                ], 404);
+            }
+        });
+        
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+            if ($request->is('api/contacts/*/addresses/*')) {
+                return response()->json([
+                    'message' => 'Data not found.'
+                ], 404);
+            }
+        });
 
        
     }

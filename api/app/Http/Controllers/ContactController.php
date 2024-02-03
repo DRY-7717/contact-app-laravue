@@ -68,6 +68,7 @@ class ContactController extends Controller
     {
         if ($contact->user_id !== auth()->user()->id) {
             throw new HttpResponseException(response()->json([
+            
                 "message" => "Data not found."
 
             ])->setStatusCode(404));

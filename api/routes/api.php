@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\ApiAuthMiddleware;
@@ -37,5 +38,10 @@ Route::middleware(ApiAuthMiddleware::class)->group(function () {
    Route::get('/contacts/{contact}', [ContactController::class,'show']);
    Route::put('/contacts/{contact}', [ContactController::class,'update']);
    Route::delete('/contacts/{contact}', [ContactController::class,'destroy']);
+
+   // address
+   Route::post('/contacts/{contact}/addresses', [AddressController::class, 'store']);
+   Route::get('/contacts/{contact}/addresses/{address}', [AddressController::class, 'show']);
+   Route::put('/contacts/{contact}/addresses/{address}', [AddressController::class, 'update']);
 
 });

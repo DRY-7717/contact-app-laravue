@@ -40,8 +40,10 @@ Route::middleware(ApiAuthMiddleware::class)->group(function () {
    Route::delete('/contacts/{contact}', [ContactController::class,'destroy']);
 
    // address
+   Route::get('/contacts/{contact}/addresses', [AddressController::class, 'index']);
    Route::post('/contacts/{contact}/addresses', [AddressController::class, 'store']);
    Route::get('/contacts/{contact}/addresses/{address}', [AddressController::class, 'show']);
    Route::put('/contacts/{contact}/addresses/{address}', [AddressController::class, 'update']);
+   Route::delete('/contacts/{contact}/addresses/{address}', [AddressController::class, 'destroy']);
 
 });
